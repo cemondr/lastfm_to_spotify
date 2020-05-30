@@ -1,3 +1,6 @@
+import spotipy
+import pylast
+
 class tag_to_playlist:
 
     def __init__(self):
@@ -14,7 +17,7 @@ class tag_to_playlist:
     
     def is_playlist_there(self,tag):
         pass
-    
+
     def create_playlist(self):
         pass
 

@@ -130,3 +130,6 @@ dmypy.json
 
 devenv-env
 config.py
+
+# Spotify access token caches for re-connecting
+.cache-*

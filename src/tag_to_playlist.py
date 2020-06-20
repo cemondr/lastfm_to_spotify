@@ -1,12 +1,13 @@
 import spotipy
 import pylast
-import config
+import spotipy.util as util;
+
 
 class tag_to_playlist:
 
     DESCRIPTION = "Imported from last.fm tag"
 
-    def __init__(self):
+    def __init__(self, config):
         self.lastfm_api_key = config.lastfm_api_key
         self.lastfm_api_secret = config.lastfm_api_secret
         self.lastfm_username = config.lastfm_username
@@ -25,8 +26,16 @@ class tag_to_playlist:
         return tag_content.get_top_tracks()
 
     def connect_to_spotify(self):
-        self.spotify_token = spotipy.prompt_for_user_token(username=self.spotify_username,scope="playlist-modify-public playlist-modify-private",client_id=self.spotify_api_key,client_secret=self.spotify_api_secret,redirect_uri=self.spotify_redirect_uri)
-    
+        try:
+            spotify_token = util.prompt_for_user_token(username=self.spotify_username,scope="playlist-modify-public playlist-modify-private",client_id=self.spotify_api_key,client_secret=self.spotify_api_secret,redirect_uri=self.spotify_redirect_uri)
+            if spotify_token:
+                self.sp = spotipy.Spotify(auth=spotify_token)
+                return True
+        except:
+            return False
+
+        return False
+
     def is_playlist_there(self,tag):
         pass
 

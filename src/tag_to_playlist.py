@@ -19,10 +19,15 @@ class tag_to_playlist:
         self.spotify_redirect_uri = config.spotify_redirect_uri
 
     def connect_to_lastfm(self):
-        self.lastfm_network = pylast.LastFMNetwork(api_key=self.lastfm_api_key,api_secret=self.lastfm_api_secret,username=self.lastfm_username,password_hash=self.lastfm_password)
+        try:
+            self.lastfm = pylast.LastFMNetwork(api_key=self.lastfm_api_key,api_secret=self.lastfm_api_secret,username=self.lastfm_username,password_hash=self.lastfm_password)
+            return True
+        except pylast.WSError:
+            return False
+            
 
     def get_tagged_songs(self,tag_name):
-        tag_content = lastfm_network.get_tag(tag_name)
+        tag_content = lastfm.get_tag(tag_name)
         return tag_content.get_top_tracks()
 
     def connect_to_spotify(self):
